@@ -4,7 +4,7 @@ const mongoose = require('mongoose')
 const dotenv = require('dotenv')
 const helmet = require('helmet')
 const morgan = require('morgan')
- 
+var cors = require('cors')
 const userRoutes = require("./routes/user")
 const authRoutes = require("./routes/auth")
 const postRoutes = require("./routes/posts")
@@ -14,6 +14,9 @@ mongoose.connect(process.env.MONGO_URL,()=>{
 });
 
 //middleware
+
+
+app.use(cors())
 app.use(express.json())
 app.use(helmet())
 app.use(morgan("common"))
