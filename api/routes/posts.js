@@ -88,17 +88,16 @@ router.get("/" , async(req,res) => {
     }
 })
 
-// //get all  post of a user
 
-// router.get("/:id" , async(req,res) => {
-//     try{
-//        const post = await Post.find({userId:id})
-//        res.status(200).json(post)
+router.get("/:id" , async(req,res) => {
+    try{
+       const post = await Post.find({userId:id})
+       res.status(200).json(post)
 
-//     }catch(err){
-//        res.status(400).json("post not fund")
-//     }
-// })
+    }catch(err){
+       res.status(400).json("post not fund")
+    }
+})
 
 //get  timline posts
 
@@ -118,4 +117,17 @@ router.get("/timeline/:userId", async (req, res) => {
     console.log(err)
   }
 });
+//get user's all posts
+
+router.get("/profile/:username", async (req, res) => {
+  try {
+    const user = await User.findOne({ username: req.params.username });
+    const posts = await Post.find({ userId: user._id });
+    res.status(200).json(posts);
+  } catch (err) {
+    console.log(err)
+    res.status(500).json(err);
+  }
+});
+
 module.exports = router;
