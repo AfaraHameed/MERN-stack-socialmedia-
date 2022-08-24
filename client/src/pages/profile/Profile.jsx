@@ -6,23 +6,26 @@ import Rightbar from "../../components/rightbar/Rightbar";
 import { useEffect } from "react";
 import { useState } from "react";
 import axios from "axios";
+import { useParams } from "react-router-dom";
 
 export default function Profile() {
   const PF = process.env.REACT_APP_PUBLIC_FOLDER;
   const [user, setUser] = useState([])
+  const username= useParams().username
+  
   useEffect(() => {
     const fetchUser = async ()=>{
      try{
-     const res =await axios.get(`/api/user?username=mom`)
+      const res = await axios.get(`/api/user?username=${username}`)
 
-     console.log(res.data)
+     console.log(username)
      setUser(res.data)
      }catch(err){
      console.log(err)
      }
     }
     fetchUser()
-   }, [])
+   }, [username])
   return (
     
     <>
@@ -34,12 +37,12 @@ export default function Profile() {
             <div className="profileCover">
               <img
                 className="profileCoverImg"
-                src={`${PF}post/img1.jpg`}
+                src={user.coverPicture || PF + "coverpgoto.png"}
                 alt=""
               />
               <img
                 className="profileUserImg"
-                src={`${PF}friend/friend.jpg`}
+                src={user.profilePicture || PF + "avatar.png"}
                 alt=""
               />
             </div>
@@ -50,7 +53,7 @@ export default function Profile() {
           </div>
           <div className="profileRightBottom">
             <Feed username={user.username} />
-            <Rightbar profile/>
+            <Rightbar user={user}/>
           </div>
         </div>
       </div>

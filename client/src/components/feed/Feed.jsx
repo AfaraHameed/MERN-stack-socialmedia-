@@ -8,13 +8,13 @@ function Feed({username}) {
   useEffect(() => {
    const fetchPost = async ()=>{
     try{
-    const res = username ? await axios.get("api/post/profile/:username")
-    : await axios.get("api/post/timeline/62e8a510ef9df0e6b3cc18db")
+    const res = username ? await axios.get(`/api/post/profile/${username}`)
+    : await axios.get("/api/post/timeline/62e8a510ef9df0e6b3cc18db")
     console.log(res.data)
     setPost(res.data)
     }catch(err){
     console.log(err)
-    }
+    } 
    }
    fetchPost()
   }, [username])
